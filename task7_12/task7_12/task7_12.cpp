@@ -30,7 +30,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	}while(n<0);
 	
-	cList* l1=new cList();
+	cList* l1=new cList(n);
 	
 	cout<< "List" <<endl;
 	l1->print();
