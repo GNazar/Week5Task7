@@ -175,6 +175,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MList.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -214,6 +218,10 @@
 			</File>
 			<File
 				RelativePath=".\CrList.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MList.h"
 				>
 			</File>
 			<File

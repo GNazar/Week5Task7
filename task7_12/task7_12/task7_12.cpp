@@ -7,7 +7,7 @@
 
 
 #include "stdafx.h"
-#include "CL.h"
+#include "MList.h"
 #include <iostream>
 
 using namespace std;
@@ -30,12 +30,12 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	}while(n<0);
 	
-	cList* l1=new cList(n);
+	cList* l1=new cList();
 	
 	cout<< "List" <<endl;
 	l1->print();
 
-	m=new double[N];
+	m=new double[N];	//allocate memory for array;
 	
 	cout<<"New numbers:"<<endl;
 
@@ -46,10 +46,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		getchar();
 	}
 	
-	l1->insert( N, m );
+	l1->insert( N, m );	//insert array
 	cout<< "New list" <<endl;
 
 	l1->print();
+
+	cout<< "Revrse order" <<endl;
+	
+	l1->revPrint();
 
 	getchar();
 	delete l1;

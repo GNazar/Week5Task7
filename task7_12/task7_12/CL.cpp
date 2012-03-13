@@ -4,6 +4,29 @@
 
 using namespace std;
 
+V::V(double val)
+{
+	v=val;
+	n=p=NULL;
+}
+
+V::V(void)
+{
+	v=0;
+	n=p=NULL;
+}
+
+V::V(const V& pr)
+{
+	v=pr.v;
+	p=pr.p;
+	n=pr.n;
+}
+
+V::~V(void){}
+
+//***************************//
+
 V* CL::getBack()
 {
 	return back;
@@ -41,10 +64,78 @@ void CL::setFront(double pr)
 		temp->n = temp->p = NULL;
 		front = back = temp;	//new record is the first and the last element in the list 
 	}
+	size++;
 }
+
 unsigned CL::getSize(void)
 {
 	return size;
+}
+
+CL::CL()
+{
+	size=( int )0;
+	front = back = NULL;
+}
+
+CL::CL( int n )
+{
+	double bf1,bf2;
+	int i = (int)1;
+	
+	back = front = NULL;
+	size=(int)0;
+	if(n>0)
+	{
+
+	cout << "1. ->";
+	cin >> bf1;
+	getchar();
+	push( bf1 );	//add first element;
+
+	while( i < n )
+	{
+		cout << (i+1)<<". ->";
+		cin >> bf2;
+		getchar ();
+		
+		if( bf2 < bf1 )	// new value less then last(not sorted);
+			cout << "Error! Value must be greater then " << bf1 << "!" << endl;
+		
+		else
+		{
+			push( bf2 );
+			i++;
+			bf1 = bf2;	//set bf1 tolast value;
+		}
+	}
+	}
+}
+
+CL::CL( CL& pr )
+{
+	V* temp = pr.getFront();
+	size = pr.getSize();
+	
+	while( temp )
+	{
+		push(temp->v);	//add value at the end of list;
+		temp = temp->n;
+	}
+}
+
+CL::~CL(void)
+{
+	V* pr;
+
+	while(front)
+	{
+		pr=front->n;
+		delete front;
+		
+		front=pr;
+	}
+	front=back=NULL;
 }
 
 void CL::push(double pr)
@@ -122,132 +213,5 @@ void CL::revPrint(void)
 
 }
 
-CL::CL()
-{
-	size=( int )0;
-	front = back = NULL;
-}
-CL::CL( int n )
-{
-	double bf1,bf2;
-	int i = (int)1;
-	
-	back = front = NULL;
-	size=(int)0;
 
-	cout << "1. ->";
-	cin >> bf1;
-	getchar();
-	push( bf1 );
 
-	while( i < n )
-	{
-		cout << (i+1)<<". ->";
-		cin >> bf2;
-		getchar ();
-		
-		if( bf2 < bf1 )
-			cout << "Error! Value must be greater then " << bf1 << "!" << endl;
-		
-		else
-		{
-			push( bf2 );
-			i++;
-			bf1 = bf2;
-		}
-	}
-}
-
-CL::CL( CL& pr )
-{
-	V* temp = pr.getFront();
-	size = pr.getSize();
-	
-	while( temp )
-	{
-		push(temp->v);
-		temp = temp->n;
-	}
-}
-
-CL::~CL(void)
-{
-	V* pr;
-
-	while(front)
-	{
-		pr=front->n;
-		front->p=front->n=NULL;
-		delete front;
-		
-		front=pr;
-	}
-	front=back=NULL;
-}
-
-//=====cList======//
-
-cList::cList():CL()
-{}
-
-cList::cList(int n):CL(n)
-{}
-
-cList::cList(cList& c):CL(c)	//copy constructor;
-{}
-
-cList::~cList()
-{}
-
-void cList::insert(double val)
-{
-	V* temp;
-	V* pr;
-	V* after;
-
-	pr=getBack();
-
-	if(val>=pr->v)	//insert at the back;
-	{
-		push(val);
-		
-		return;
-	}
-
-	pr=getFront();
-
-	if(val<=pr->v)	//insert at the front;
-	{
-		setFront(val);
-		
-		return;
-	}
-	
-
-	try
-	{	
-		temp=new V(val);
-	
-	}catch(...)
-
-	{
-		cout<<"Error!"<<endl;
-	}
-
-	while( ( pr ) && ( val > pr->v ) )
-		pr=pr->n;
-
-	after=pr->p;
-
-	after->n=temp;	//link new element with previous element;
-	temp->p=after;
-
-	temp->n=pr;	//link new element with next element;
-	pr->p=temp;
-}
-
-void cList::insert(unsigned n,double* m)
-{
-	for(unsigned i=0;i<n;i++)
-		insert( *(m+i) );
-}
